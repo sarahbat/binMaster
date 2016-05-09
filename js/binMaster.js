@@ -14,7 +14,7 @@ var binMaster = {};
  */
 binMaster.Bin = function (minVal, maxVal, color) {
 	this.set_numericDefn(minVal, maxVal);
-	this.set_encodingDefn(color);
+	this.set_encodingDefn(color); // could be extended to have different encoding objects for different purposes
 	this.labelVals = {}; // default object for label values
 	this.set_labelDefn("DEFAULT", minVal, maxVal); // always create a default label based on any specified min/max values
 };
