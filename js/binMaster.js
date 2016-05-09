@@ -1,3 +1,11 @@
+/**
+ * @fileoverview binMaster.js defines the Bin object.  A Bin consists of:
+ * 				- numeric definition of bin extrema (min/max)
+ *				- encoding definition
+ * 				- label definition(s) with numeric and semantic definition of the bin class and extrema
+ */
+/*jslint nomen:true, plusplus:true, todo:true,  browser:true  */
+'use strict';
 
 
 var binMaster = {};
@@ -11,7 +19,6 @@ binMaster.Bin = function (minVal, maxVal, color) {
 	this.set_labelDefn("DEFAULT", minVal, maxVal); // always create a default label based on any specified min/max values
 };
 
-
 /**
  * Numeric characteristics for one bin
  */ 
@@ -22,13 +29,10 @@ binMaster.Bin.prototype.set_numericDefn = function(minVal, maxVal){
 		range: maxVal-minVal
 	};
 
-	// if a DEFAULT labelDefn already exists, update it
+	// if a DEFAULT labelDefn already exists, update it with new numeric definition (pass a null for Range; will be set in set_labelDefn)
 	if (this.labelVals){
-		// update the label definition with new numeric definition (pass a null for Range; will be set in set_labelDefn)
 		this.set_labelDefn("DEFAULT", null, this.binVals.min, this.binVals.max)
-	} else{
-		return; // no labelVals exists, so no need to update
-	}
+	} 
 }
 
 /**
@@ -51,9 +55,13 @@ binMaster.Bin.prototype.set_labelDefn = function(labelName, rangeVal, minVal, ma
 		rangeVal = minVal + " - " + maxVal;
 	}
 
+	if (rangeVal === undefined){
+		rangeVal = minVal + " - " + maxVal;  // label for class - if not specified, default to "binVals.min - binVals.max"
+	}
+
 	this.labelVals[labelName] = {
-		rangeLabel: rangeVal, // label for entire class - if not specified, default to "binVals.min - binVals.max"
-		minLabel: minVal, // label for lower range of the bin 
-		maxLabel: maxVal // label for higher range of the bin
+		rangeLabel: rangeVal, 
+		minLabel: minVal,  
+		maxLabel: maxVal 
 	}
 }
