@@ -4,7 +4,7 @@
 /*jslint nomen:true, plusplus:true, todo:true,  browser:true  */
 'use strict';
 
-var main;
+
 
 /**
  * @constructor
@@ -29,3 +29,6 @@ binMaster.Main.prototype.init = function() {
 	//     }
 	// }
 };
+
+// Load up the data...
+binMaster.Main();
