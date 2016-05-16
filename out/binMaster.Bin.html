@@ -231,14 +231,14 @@
 
     
 
-    <h4 class="name" id="setEncodingDefn"><span class="type-signature"></span>setEncodingDefn<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setBinMax"><span class="type-signature"></span>setBinMax<span class="signature">(val)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Visual encoding characteristics for one bin
+    Set value for bin maximum to specified value
 </div>
 
 
@@ -247,6 +247,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">max bin value</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -282,7 +331,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bin.js.html">bin.js</a>, <a href="bin.js.html#line68">line 68</a>
+        <a href="bin.js.html">bin.js</a>, <a href="bin.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -313,14 +362,14 @@
 
     
 
-    <h4 class="name" id="setLabelDefn"><span class="type-signature"></span>setLabelDefn<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setBinMin"><span class="type-signature"></span>setBinMin<span class="signature">(val)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Numeric or semantic  encoding characteristics for labeling bin.  DEFAULT is set up when class is created, will always contain numeric entries
+    Set value for bin minimum to specified value
 </div>
 
 
@@ -329,6 +378,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>val</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">min bin value</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -364,7 +462,338 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="bin.js.html">bin.js</a>, <a href="bin.js.html#line78">line 78</a>
+        <a href="bin.js.html">bin.js</a>, <a href="bin.js.html#line51">line 51</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setEncodingDefn"><span class="type-signature"></span>setEncodingDefn<span class="signature">(opt_colorVal)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Visual encoding characteristics for one bin
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_colorVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">color for the bin (in hex)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="bin.js.html">bin.js</a>, <a href="bin.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="setLabelDefn"><span class="type-signature"></span>setLabelDefn<span class="signature">(labelName, rangeVal, minVal, maxVal)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Numeric or semantic  encoding characteristics for labeling bin.  DEFAULT is set up when class is created, will always contain numeric entries
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>labelName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">label for bin entry</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rangeVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">range-based label for class (DEFAULT labelName = "minVal - maxVal")</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>minVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">label for min edge of class (DEFAULT labelName = minVal)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>maxVal</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">label for max edge of class (DEFAULT labelName = maxVal)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="bin.js.html">bin.js</a>, <a href="bin.js.html#line94">line 94</a>
     </li></ul></dd>
     
 
@@ -402,7 +831,7 @@
 
 
 <div class="description">
-    Numeric characteristics for one bin sets min, max, and calculates range
+    Numeric characteristics for one bin;calculates range if both min and max are defined
 </div>
 
 
@@ -566,7 +995,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon May 16 2016 15:50:47 GMT-0700 (Pacific Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon May 16 2016 16:02:32 GMT-0700 (Pacific Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -24,8 +24,8 @@ binMaster.Bin = function (opt_minVal, opt_maxVal, opt_color) {
 };
 
 /**
- * Numeric characteristics for one bin 
- * sets min, max, and calculates range
+ * Numeric characteristics for one bin;
+ * calculates range if both min and max are defined
  * 
  * @param {number} opt_minVal - an optional minimum value for the bin
  * @param {number} opt_maxVal - an optional maximum value for the bin 
@@ -43,6 +43,11 @@ binMaster.Bin.prototype.setNumericDefn = function(opt_minVal, opt_maxVal){
 	} 
 };
 
+/**
+ * Set value for bin minimum to specified value
+ * 
+ * @param {number} val - min bin value
+ */ 
 binMaster.Bin.prototype.setBinMin = function(val){
 	this.binVals.min = val;
 	if (this.binVals.max != undefined){
@@ -52,6 +57,11 @@ binMaster.Bin.prototype.setBinMin = function(val){
 	return this.binVals.min;
 }
 
+/**
+ * Set value for bin maximum to specified value
+ * 
+ * @param {number} val - max bin value
+ */ 
 binMaster.Bin.prototype.setBinMax = function(val){
 	this.binVals.max = val;
 	if (this.binVals.min != undefined){
@@ -61,10 +71,11 @@ binMaster.Bin.prototype.setBinMax = function(val){
 	return this.binVals.max;
 }
 
-
 /**
  * Visual encoding characteristics for one bin
- */
+ * 
+ * @param {string} opt_colorVal - color for the bin (in hex)
+ */ 
 binMaster.Bin.prototype.setEncodingDefn = function(colorVal){
 	this.encodeVals = {
 		color: colorVal
@@ -74,6 +85,11 @@ binMaster.Bin.prototype.setEncodingDefn = function(colorVal){
 /**
  * Numeric or semantic  encoding characteristics for labeling bin.  
  * DEFAULT is set up when class is created, will always contain numeric entries
+ * 
+ * @param {string} labelName - label for bin entry
+ * @param {string} rangeVal - range-based label for class (DEFAULT labelName = "minVal - maxVal")
+ * @param {string} minVal - label for min edge of class (DEFAULT labelName = minVal)
+ * @param {string} maxVal - label for max edge of class (DEFAULT labelName = maxVal)
  */
 binMaster.Bin.prototype.setLabelDefn = function(labelName, rangeVal, minVal, maxVal){
 	if (labelName === "DEFAULT"){ // if this is the initialization, set the min/max to the object min/max (if they were already defined)
