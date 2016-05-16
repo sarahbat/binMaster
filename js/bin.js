@@ -10,9 +10,9 @@
 // TODO: JSDoc markup...
 
 /**
- * @param {number} minVal is the minimum bin value
- * @param {number} maxVal is the maximum bin value
- * @param {string} color is the color for the bin in hex
+ * @param {number} opt_minVal - minimum bin value
+ * @param {number} opt_maxVal - maximum bin value
+ * @param {string} opt_color - color for the bin (in hex)
  *  
  * @constructor
  */
