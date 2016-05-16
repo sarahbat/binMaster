@@ -1,4 +1,4 @@
-# binMaster-finalFrontier
+# binMaster - The Final Frontier
 
 Intuitive data bins that are quantitatively and/or semantically meaningful. 
 
