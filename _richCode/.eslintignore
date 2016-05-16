@@ -1,0 +1,4 @@
+../../aaa_notForProject/**/*.js
+../client/thirdParty/**/*.js
+../server/thirdParty/**/*.js
+../server/node_modules/**/*.js
