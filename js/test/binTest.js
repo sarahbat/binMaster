@@ -1,3 +1,5 @@
+// assorted functionality tests
+
 // make a 5 class binList 
 var binTest = new binMaster.BinList(5);
 
@@ -11,3 +13,10 @@ for (var i = 0; i < 5; i++){
 
 // find which bin has which values
 binTest.getBin(12);
+
+// test out with the dataMgr and an array of breaks
+var b = new binMaster.BinList([0, 1000, 5000, 10000, 25000, 50000, 100000])
+var data = binMaster.dataMgr.getColumn('FIPS');
+for (var i = 0; i < data.length; i++) {
+	console.log(data[i], "is in class", b.getBin(data[i]));
+}
