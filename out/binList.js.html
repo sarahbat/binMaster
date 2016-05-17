@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: binList.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: binList.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @fileoverview binList.js defines the BinList object.  A BinList consists of:
  * 			set of bins
  * 		    ??? - data connection, etc., e.g. the population bin list with 5 bins
@@ -19,7 +47,7 @@ binMaster.BinList = function (binParam){
 	if (typeof(binParam) === "number"){ // BinList defined to be specified length
 		this.bins = new Array(binParam);
 		if (binParam > 0){
-			for (var i = 0; i < binParam; i++){
+			for (var i = 0; i &lt; binParam; i++){
 				this.bins[i] = new binMaster.Bin;
 			}
 		}
@@ -27,11 +55,11 @@ binMaster.BinList = function (binParam){
 		binParam.sort(function(a, b){return a-b}); // make sure they are in ascending order
 
 		this.bins = new Array(binParam.length - 1); // an array of breaks is one longer than number of classes 
-		for (var i = 0; i < binParam.length - 1; i++){
+		for (var i = 0; i &lt; binParam.length - 1; i++){
 			this.bins[i] = new binMaster.Bin;
 		}
 		// set bin values based on array-specified breaks
-		for (var i = 0; i < binParam.length - 1; i++){
+		for (var i = 0; i &lt; binParam.length - 1; i++){
 			this.bins[i].setBinMin(binParam[i]);
 			this.bins[i].setBinMax(binParam[i+1]); // binBreaks should always be numBins + 1
 		}
@@ -58,7 +86,7 @@ binMaster.BinList = function (binParam){
  * @returns {Bin} - Bin object
  */ 
 binMaster.BinList.prototype.getBinNumber = function (binNumber){
-	if (binNumber < this.bins.length){
+	if (binNumber &lt; this.bins.length){
 		return this.bins[binNumber];
 	} else {
 		console.log("The binNumber (", binNumber, ") is not valid.  There are only", this.bins.length, "bins");
@@ -91,8 +119,8 @@ binMaster.BinList.prototype.getOutRangeBin_low = function(){
  * @returns {number} Bin number (in BinList array)
  */ 
 binMaster.BinList.prototype.getBin = function(dataVal){
-	for (var i = 0; i < this.bins.length; i++){
-		if(this.bins[i].binVals.min != undefined && this.bins[i].binVals.max != undefined){
+	for (var i = 0; i &lt; this.bins.length; i++){
+		if(this.bins[i].binVals.min != undefined &amp;&amp; this.bins[i].binVals.max != undefined){
 			if (inRange(dataVal, this.bins[i].binVals.min, this.bins[i].binVals.max)){
 				return i;
 			}
@@ -100,7 +128,7 @@ binMaster.BinList.prototype.getBin = function(dataVal){
 	}
 
 	function inRange(dataVal, min, max){
-		if (dataVal > min && dataVal <= max){
+		if (dataVal > min &amp;&amp; dataVal &lt;= max){
 			return true;
 		} 
 		return false;
@@ -113,11 +141,11 @@ binMaster.BinList.prototype.getBin = function(dataVal){
  */ 
 binMaster.BinList.prototype.setMin = function(){
 	var min;
-	for (var i = 0; i < this.bins.length; i++){
-		if(this.bins[i].binVals.min != undefined && this.bins[i].binVals.max != undefined){
+	for (var i = 0; i &lt; this.bins.length; i++){
+		if(this.bins[i].binVals.min != undefined &amp;&amp; this.bins[i].binVals.max != undefined){
 			if (min === undefined) { min = this.bins[i].binVals.min;}
 			else {
-				if (this.bins[i].binVals.min < min){
+				if (this.bins[i].binVals.min &lt; min){
 					min = this.bins[i].binVals.min;
 				}
 			}
@@ -132,8 +160,8 @@ binMaster.BinList.prototype.setMin = function(){
  */ 
 binMaster.BinList.prototype.setMax = function(){
 	var max;
-	for (var i = 0; i < this.bins.length; i++){
-		if(this.bins[i].binVals.min != undefined && this.bins[i].binVals.max != undefined){
+	for (var i = 0; i &lt; this.bins.length; i++){
+		if(this.bins[i].binVals.min != undefined &amp;&amp; this.bins[i].binVals.max != undefined){
 			if (max === undefined) { max = this.bins[i].binVals.max;}
 			else {
 				if (this.bins[i].binVals.max > max){
@@ -146,20 +174,20 @@ binMaster.BinList.prototype.setMax = function(){
 }
 
 /**
- * Set minimum & maximum value at same time for the BinList based on smallest/largest value in all Bins in the BinList
+ * Set minimum &amp; maximum value at same time for the BinList based on smallest/largest value in all Bins in the BinList
  *
  */ 
 binMaster.BinList.prototype.setMinMax = function(){
 	var max, min;
-	for (var i = 0; i < this.bins.length; i++){
-		if(this.bins[i].binVals.min != undefined && this.bins[i].binVals.max != undefined){
+	for (var i = 0; i &lt; this.bins.length; i++){
+		if(this.bins[i].binVals.min != undefined &amp;&amp; this.bins[i].binVals.max != undefined){
 			if (max === undefined) { max = this.bins[i].binVals.max;}
 			if (min === undefined) { min = this.bins[i].binVals.min;}
 			else {
 				if (this.bins[i].binVals.max > max){
 					max = this.bins[i].binVals.max;
 				}
-				if (this.bins[i].binVals.min < min){
+				if (this.bins[i].binVals.min &lt; min){
 					min = this.bins[i].binVals.min;
 				}
 			}
@@ -168,3 +196,26 @@ binMaster.BinList.prototype.setMinMax = function(){
 	this.binMax = max; 
 	this.binMin = min;
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue May 17 2016 07:17:47 GMT-0700 (Pacific Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

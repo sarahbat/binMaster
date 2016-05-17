@@ -7,7 +7,7 @@
 /*jslint nomen:true, plusplus:true, todo:true,  browser:true  */
 "use strict";
 
-// TODO: JSDoc markup...
+// TODO: Fill in getters / setters
 
 /**
  * @param {number} opt_minVal - minimum bin value
