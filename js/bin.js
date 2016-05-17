@@ -53,7 +53,11 @@ binMaster.Bin.prototype.setBinMin = function(val){
 	if (this.binVals.max != undefined){
 		this.binVals.range = this.binVals.max - this.binVals.min;
 	}
+	this.setLabelDefn("DEFAULT", this.binVals.range, this.binVals.min, this.binVals.max);
+	return this.binVals.min;
+}
 
+binMaster.Bin.prototype.getBinMin = function(){
 	return this.binVals.min;
 }
 
@@ -67,16 +71,26 @@ binMaster.Bin.prototype.setBinMax = function(val){
 	if (this.binVals.min != undefined){
 		this.binVals.range = this.binVals.max - this.binVals.min;
 	}
-	
+	this.setLabelDefn("DEFAULT", this.binVals.range, this.binVals.min, this.binVals.max);
 	return this.binVals.max;
+}
+binMaster.Bin.prototype.getBinMax = function(){
+	return this.binVals.max;
+}
+
+binMaster.Bin.prototype.getBinRange = function(){
+	return this.binVals.range;
 }
 
 /**
  * Visual encoding characteristics for one bin
  * 
- * @param {string} opt_colorVal - color for the bin (in hex)
+ * @param {string} colorVal - color for the bin (in hex)
  */ 
 binMaster.Bin.prototype.setEncodingDefn = function(colorVal){
+	if (colorVal === undefined){
+		colorVal = "#000000";
+	}
 	this.encodeVals = {
 		color: colorVal
 	};
@@ -98,7 +112,7 @@ binMaster.Bin.prototype.setLabelDefn = function(labelName, rangeVal, minVal, max
 		rangeVal = minVal + " - " + maxVal;
 	}
 
-	if (rangeVal === undefined){
+	if (rangeVal === undefined || rangeVal === null){
 		rangeVal = minVal + " - " + maxVal;  // label for class - if not specified, default to "binVals.min - binVals.max"
 	}
 
