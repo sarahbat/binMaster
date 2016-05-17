@@ -145,3 +145,35 @@ binMaster.DataMgr.prototype.getColumnType = function (columnName) {
   }
   return colType;
 }
+
+
+/**
+ * @param {string} columnName - name of the column to classify
+ * @param {string} breakType - name of the class break method
+ * @param {number} numberClasses - number of class breaks to use
+ * 
+ * @requires geostats.js
+ *
+ * @return {array} array of class breaks
+ */
+binMaster.DataMgr.prototype.getBins = function(columnName, breakType, numberClasses){
+    console.log('Getting class breaks...');
+    var gsData = new geostats(this.getColumn(columnName));
+    var bins;
+    // grab classbreaks using geostats.js library
+    switch (breakType) {
+        case 'Jenks':
+            bins = gsData.getClassJenks(numberClasses);
+            break;
+        case 'EqualInterval':
+            bins = gsData.getClassEqInterval(numberClasses);
+            break;
+        case 'Quantile':
+            bins = gsData.getClassQuantile(numberClasses);
+            break;
+        default:
+            alert('Unknown classification scheme selected\n[Jenks, EqualInterval, Quantile]');
+            return;
+    }
+    return bins;
+};
