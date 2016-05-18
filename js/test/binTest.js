@@ -28,3 +28,10 @@ function testBins(){
 	// // should return an out of range
 	bins.getBin(12);
 }
+
+function testMap(){
+	d3map.loadTopoJSON();
+	map_div = d3map.makeMapDiv(null, 'test');
+	map_svg = d3map.makeMapSVG(map_div);
+	d3map.drawTopoJSON(map_svg, d3map.data, 'counties');
+}
