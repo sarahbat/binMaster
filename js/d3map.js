@@ -20,7 +20,7 @@ d3map.loadGeoJSON = function(inputFile){
 
 d3map.loadTopoJSON = function(inputFile){
 	queue()
-	    .defer(d3.json, './data/us_noAKHI.json')// load up the map data
+	    .defer(d3.json, inputFile)// load up the map data
 	    .await(ready);
 
 	function ready(error, mapData) {
@@ -30,45 +30,97 @@ d3map.loadTopoJSON = function(inputFile){
 	}
 }
 
-d3map.makeMapDiv = function(containerDivID, mapDivName){
+
+/**
+ * Create a DIV to hold the map (if one doesn't already exist to use)
+ * @param {string} containerDivID - ID for the parent div.  If not provided, will default to appending DIV to <body> 
+ * @param {string} mapDivName - Name to assign to the newly created div.  If not provided, will default to 'myMap'
+ * @param {number} opt_height - height for div.  If not provided will try to match parent DIV size, or will match width, or will default to 100px
+ * @param {number} opt_width - width for div.  If not provided will try to match parent DIV size, or will match height, or will default to 100px
+ */
+d3map.makeMapDiv = function(containerDivID, mapDivName, opt_height, opt_width){
 	var mapContainer = '#' + containerDivID;
 	if (mapDivName === undefined || null){mapDivName = 'myMap';} 
 
 	if (d3.select(mapContainer).empty()){
-		console.log('the DIV id listed: ', containerDivID + ' does not exist, appending mapSVG to <body> instead');
+		console.log('the DIV id listed: ', containerDivID + ' does not exist, appending map DIV to <body> instead');
 		mapContainer = 'body';
 	}
 	var map_div = d3.select(mapContainer)
 					.append('div')
-					.attr('class', mapDivName);
+					.attr('class', mapDivName)
+					.attr('id', mapDivName);
+
+	var height = getHeight(mapContainer);
+	var width = getWidth(mapContainer);
 
 	// if div does not have height and width, fill in some defaults (make it a square, or 100px default)
-	if (map_div.style('height') === '0px'){
-		if (map_div.style('width') !== '0px') { 
-			map_div.style('height', map_div.style('width'));
-		} else {
-			map_div.style('height', '100px');
+	if (opt_height !== undefined || null){
+		map_div.attr('height', opt_height + 'px');
+	} else {
+		if (height === '0px'){
+			if (width !== '0px') { 
+				map_div.attr('height', width);
+			} else {
+				map_div.attr('height', '100px');
+			}
+		} else{
+			map_div.attr('height', height);
 		}
 	}
-	if (map_div.style('width') === '0px'){
-		if (map_div.style('height') !== '0px') {
-			map_div.style('width', map_div.style('height'));
+
+	if (opt_width !== undefined || null){
+		map_div.attr('width', opt_width + 'px');
+	} else {
+		if (width === '0px'){
+			if (height !== '0px') { 
+				map_div.attr('width', height);
+			} else {
+				map_div.attr('width', '100px');
+			}
 		} else {
-			map_div.style('width', '100px');
+			map_div.attr('width', width);
 		}
 	}
 
 	return map_div;
+
+	function getWidth(divID){
+		if (d3.select(divID).attr('width') !== null || undefined){
+			return d3.select(divID).attr('width');
+		}
+		if (d3.select(divID).style('width' !== null || undefined)){
+			return d3.select(divID).style('width');
+		}
+		return '0px';
+	}
+
+	function getHeight(divID){
+		if (d3.select(divID).attr('height') !== null || undefined){
+			return d3.select(divID).attr('height');
+		}
+		if (d3.select(divID).style('height') !== null || undefined){
+			return d3.select(divID).style('height');
+		}
+		return '0px';
+	}
+
 }
 
+/**
+ * Create an SVG canvas to contain the map (if one doesn't already exist to use)
+ * @param {array} mapDiv - DIV (e.g., can be retrieved from d3.select(name of your div))
+ * @param {array} svgName - id to be assigned to the SVG
+ */
 d3map.makeMapSVG = function(mapDiv, svgName){
+	d3.select('#' + svgName).remove(); // remove any existing svg with same name
 	if (svgName === undefined || null) {
 		svgName = 'myMapSVG';
 	}
 	if (mapDiv){
 		// SVG will max out to height and width of div
-	    var w = mapDiv.style('width'),
-	    	h = mapDiv.style('height');
+	    var w = mapDiv.attr('width'),
+	    	h = mapDiv.attr('height');
 
 	    var width = w.substring(0, w.length - 2),
 	        height = h.substring(0, h.length - 2);
@@ -76,7 +128,8 @@ d3map.makeMapSVG = function(mapDiv, svgName){
 		var map_svg = mapDiv.append('svg')
 						.attr('width', width)
 						.attr('height', height)
-						.attr('class', svgName);
+						.attr('class', svgName)
+						.attr('id', svgName);
 	} else {
 		console.log(mapDiv + ' does not exist; please input a valid map DIV');
 	}
@@ -106,7 +159,7 @@ d3map.drawTopoJSON = function(mapSVG, topoFeatures, featureName, idField){
     var path = d3.geo.path()
         .projection(projection);
 
-    map_svg.append("g")
+    mapSVG.append("g")
         .attr("class", featureName)
         .selectAll("path")
         .data(topojson.feature(topoFeatures, topoFeatures.objects[featureName]).features)
@@ -116,6 +169,19 @@ d3map.drawTopoJSON = function(mapSVG, topoFeatures, featureName, idField){
         .attr("id", function (d) {
             return "_" + d[idField]; // need to make this generic...pass in the ID field?
     });
+}
+
+d3map.encodeMap = function(featureName, featureData, colorScheme, numberBins){
+	// update the map to color encode with classed data
+    console.log('color encoding map...');
+
+    for (var i = 0; i < featureData.length; i++){
+    	d3.select('#_' + featureData[i].id)
+    		.style('fill', null)
+    		.attr('class', function(d){
+    			return featureName + ' ' + colorScheme + 'q' + featureData[i].value + '-' + numberBins;
+    		});
+    }
 }
 
 
