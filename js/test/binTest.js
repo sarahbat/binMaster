@@ -29,9 +29,27 @@ function testBins(){
 	bins.getBin(12);
 }
 
-function testMap(){
-	d3map.loadTopoJSON();
-	map_div = d3map.makeMapDiv(null, 'test');
+function loadMapTestData(){
+	d3map.loadTopoJSON('./data/us_noAKHI.json');
+}
+
+function testMap(breakType){
+	if (breakType === undefined){ breakType = 'EqualInterval';}
+
+	d3.select('.test').remove();
+	map_div = d3map.makeMapDiv(null, 'test', 500, 500); // 500px square div
 	map_svg = d3map.makeMapSVG(map_div);
-	d3map.drawTopoJSON(map_svg, d3map.data, 'counties');
+	d3map.drawTopoJSON(map_svg, d3map.data, 'counties', 'id');
+	// get class breaks
+	var breaks = binMaster.dataMgr.getBins('PCT_04', breakType, 5);
+	var bins = new binMaster.BinList(breaks);
+	var binnedData = [];
+	var id = binMaster.dataMgr.getColumn('FIPS');
+	var data = binMaster.dataMgr.getColumn('PCT_04');
+
+	for (var i = 0; i < data.length; i++) {
+		binnedData.push({'id': [id[i]], 'value': bins.getBin(data[i])});
+	}
+
+	d3map.encodeMap('counties', binnedData, 'YlGn', breaks.length-1); // encode and link FIPS code to NUM_04 attribute
 }
