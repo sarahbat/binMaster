@@ -174,12 +174,17 @@ binMaster.BinList.prototype.setMinMax = function(){
 	this.binMin = min;
 }
 
+/**
+ * Relatively pretty print of bin breaks
+ * 
+ * @param {string} labelName - if custom labeling has been set, the name assigned to the label group (otherwise default labels) 
+ */ 
 binMaster.BinList.prototype.printBins = function(labelName){
 	if (labelName === undefined){
 		labelName = "DEFAULT";
 	}
-	if (this.bins[i][labelName] === undefined){ // label is not in use; use Default instead
-		console.log('The label' + labelName + 'is not a valid name in use in the Bins');
+	if (this.bins[0].labelVals[labelName] === undefined){ // label is not in use; use Default instead
+		console.log('The label ' + labelName + ' is not a valid name in use in the Bins; returning Default labels instead');
 		labelName = "DEFAULT"; 
 	}
 
@@ -200,4 +205,53 @@ binMaster.BinList.prototype.getBinBreaks = function(){
 		binBreaks.push(this.bins[i].getBinMax());
 	}
 	return binBreaks;
+}
+
+/**
+ * Set color encoding for all bins in a BinList
+ * Currently just returns up to a 5 class randomly selected color scheme
+ * Will be plugged in to call Maureen's color selector widget based on number of bins and color scheme of interest
+ * 
+ * @param {string} colorScheme - description for color scheme (input specs to be defined...)
+ *
+ */ 
+binMaster.BinList.prototype.setColorEncoding = function(colorScheme){
+	var colors = get_colors(this.bins.length, colorScheme);
+	for (var i = 0; i < this.bins.length; i++){
+		this.bins[i].setEncodingDefn(colors[i]);
+	}
+
+	function get_colors(numberColors, colorScheme){
+		var randomColorSchemes = [
+			['#ffffcc', '#a1dab4', '#41b6c4', '#2c7fb8', '#253494'],
+			['#ffffb2','#fecc5c','#fd8d3c','#f03b20','#bd0026'],
+			['#feebe2','#fbb4b9','#f768a1','#c51b8a','#7a0177'],
+			['#f7f7f7','#cccccc','#969696','#636363','#252525']
+		];
+
+		var rand = getRandomInt(0, randomColorSchemes.length-1);
+		return randomColorSchemes[rand];
+	}
+
+	/**
+	 * Returns a random integer between min (inclusive) and max (inclusive)
+	 * Using Math.round() will give you a non-uniform distribution!
+	 */
+	function getRandomInt(min, max) {
+	    return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+}
+
+/**
+ * @return array of colors assigned to the bins in a BinList
+ *
+ */ 
+binMaster.BinList.prototype.getEncoding = function(){
+	var colors = [];
+	for (var i = 0; i < this.bins.length; i++){
+		// console.log(this.bins[i].encodeVals);
+		colors.push(this.bins[i].encodeVals.color)
+	}
+
+	return colors;
 }
