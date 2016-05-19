@@ -9,6 +9,8 @@
 
 // TODO: Fill in getters / setters
 
+const DEFAULT_COLOR = '#ccc';
+
 /**
  * @param {number} opt_minVal - minimum bin value
  * @param {number} opt_maxVal - maximum bin value
@@ -89,12 +91,16 @@ binMaster.Bin.prototype.getBinRange = function(){
  */ 
 binMaster.Bin.prototype.setEncodingDefn = function(colorVal){
 	if (colorVal === undefined){
-		colorVal = "#000000";
+		colorVal = DEFAULT_COLOR;
 	}
 	this.encodeVals = {
 		color: colorVal
 	};
 };
+
+binMaster.Bin.prototype.getColor = function(){
+	return this.encodeVals.color;
+}
 
 /**
  * Numeric or semantic  encoding characteristics for labeling bin.  
