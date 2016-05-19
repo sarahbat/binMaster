@@ -14,6 +14,7 @@ binMaster.DataMgr = function (dataPath, cb) {
   this.columnNameList = [];
   this.colCount = 0;
   this.rowCount = 0;
+  this.key = ""; // key field for joins
 };
 
 
@@ -31,7 +32,6 @@ binMaster.DataMgr.prototype.load = function (dataPath, cb) {
 		this.rowCount = this.data ? this.data.length : 0;
 		cb();
 	}.bind(this));
-
 };
 
 
@@ -148,6 +148,22 @@ binMaster.DataMgr.prototype.getColumnType = function (columnName) {
 
 
 /**
+ * Define a key field to use in data joins
+ * 
+ * @param {string} keyField - name of the key field
+ * 
+ */
+binMaster.DataMgr.prototype.setKey = function (keyField) {
+  if (this.getColumnNames().indexOf(keyField) !== -1){
+    this.key = keyField;
+    return;
+  } else {
+    console.log(keyField + ' is not a column name in the dataMgr.');
+    return;
+  }
+};
+
+/**
  * @param {string} columnName - name of the column to classify
  * @param {string} breakType - name of the class break method
  * @param {number} numberClasses - number of class breaks to use
@@ -161,14 +177,14 @@ binMaster.DataMgr.prototype.getBins = function(columnName, breakType, numberClas
     var gsData = new geostats(this.getColumn(columnName));
     var bins;
     // grab classbreaks using geostats.js library
-    switch (breakType) {
-        case 'Jenks':
+    switch (breakType.toLowerCase()) {
+        case 'jenks':
             bins = gsData.getClassJenks(numberClasses);
             break;
-        case 'EqualInterval':
+        case 'equalinterval':
             bins = gsData.getClassEqInterval(numberClasses);
             break;
-        case 'Quantile':
+        case 'quantile':
             bins = gsData.getClassQuantile(numberClasses);
             break;
         default:
