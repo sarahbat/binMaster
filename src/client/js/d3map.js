@@ -3,7 +3,9 @@
  * 				 
  */
 
-var d3map = {};
+var d3map = {
+};
+
 d3map.data = {}; // used when geoJson is loaded up
 
 d3map.loadGeoJSON = function(inputFile){
@@ -171,16 +173,19 @@ d3map.drawTopoJSON = function(mapSVG, topoFeatures, featureName, idField){
     });
 }
 
-d3map.encodeMap = function(featureName, featureData, colorScheme, numberBins){
+d3map.encodeMap = function(featureName, featureData, binList){
 	// update the map to color encode with classed data
     console.log('color encoding map...');
 
     for (var i = 0; i < featureData.length; i++){
     	d3.select('#_' + featureData[i].id)
     		.style('fill', null)
-    		.attr('class', function(d){
-    			return featureName + ' ' + colorScheme + 'q' + featureData[i].value + '-' + numberBins;
-    		});
+    		.style('fill', function(){
+    			return binList.bins[featureData[i].value].getColor();
+    		})
+    		.attr('class', function(){
+    			return 'class' + featureData[i].value; 
+    		})
     }
 }
 
