@@ -1,4 +1,7 @@
 // assorted functionality tests
+
+var binTest = {};
+
 function testBins(){
 	// make a 5 class binList 
 	var binTest = new binMaster.BinList(5);
@@ -41,15 +44,15 @@ function testMap(breakType){
 	map_svg = d3map.makeMapSVG(map_div);
 	d3map.drawTopoJSON(map_svg, d3map.data, 'counties', 'id');
 	// get class breaks
-	var breaks = binMaster.dataMgr.getBins('PCT_04', breakType, 5);
-	var bins = new binMaster.BinList(breaks);
-	var binnedData = [];
-	var id = binMaster.dataMgr.getColumn('FIPS');
-	var data = binMaster.dataMgr.getColumn('PCT_04');
+	binTest.breaks = binMaster.dataMgr.getBins('PCT_04', breakType, 5);
+	binTest.bins = new binMaster.BinList(binTest.breaks);
+	binTest.binnedData = [];
+	binTest.id = binMaster.dataMgr.getColumn('FIPS');
+	binTest.data = binMaster.dataMgr.getColumn('PCT_04');
 
-	for (var i = 0; i < data.length; i++) {
-		binnedData.push({'id': [id[i]], 'value': bins.getBin(data[i])});
+	for (var i = 0; i < binTest.data.length; i++) {
+		binTest.binnedData.push({'id': [binTest.id[i]], 'value': binTest.bins.getBin(data[i])});
 	}
 
-	d3map.encodeMap('counties', binnedData, 'YlGn', breaks.length-1); // encode and link FIPS code to NUM_04 attribute
+	d3map.encodeMap('counties', binTest.binnedData, 'YlGn', binTest.breaks.length-1); // encode and link FIPS code to NUM_04 attribute
 }
