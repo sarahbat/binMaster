@@ -41,7 +41,8 @@ function testBins(){
 
 
 	// test out with geostats.js to define the bins statistically
-	var breaks = binMaster.dataMgr.getBins('FIPS', 'Quantile', 5);
+	var data = binMaster.dataMgr.getColumn('FIPS');
+	var breaks = binMaster.dataMgr.getBins(data, 'Quantile', 5);
 	var bins = new binMaster.BinList(breaks);
 	// // should return an out of range
 	bins.getBin(12);
@@ -60,12 +61,12 @@ function testMap(breakType){
 	map_div = d3map.makeMapDiv(null, 'test', 500, 500); // 500px square div
 	map_svg = d3map.makeMapSVG(map_div);
 	d3map.drawTopoJSON(map_svg, d3map.data, 'counties', 'id');
+	binTest.data = binMaster.dataMgr.getColumn('PCT_04');
 	// get class breaks
-	binTest.breaks = binMaster.dataMgr.getBins('PCT_04', breakType, 5);
+	binTest.breaks = binMaster.dataMgr.getBins(binTest.data, breakType, 5);
 	binTest.bins = new binMaster.BinList(binTest.breaks);
 	binTest.binnedData = [];
 	binTest.id = binMaster.dataMgr.getColumn(binMaster.dataMgr.key); // retrieve column set as key field
-	binTest.data = binMaster.dataMgr.getColumn('PCT_04');
 
 	binTest.bins.setColorEncoding(5);
 

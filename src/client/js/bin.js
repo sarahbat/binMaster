@@ -107,7 +107,7 @@ binMaster.Bin.prototype.setEncodingDefn = function(colorVal){
  */ 
 binMaster.Bin.prototype.getColor = function(opt_format){
 	if (opt_format === undefined){opt_format = 'hex';}
-	return chroma(this.encodeVals.color)[opt_format]();
+	return this.encodeVals.color[opt_format]();
 }
 
 /**

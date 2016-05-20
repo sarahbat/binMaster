@@ -164,7 +164,7 @@ binMaster.DataMgr.prototype.setKey = function (keyField) {
 };
 
 /**
- * @param {string} columnName - name of the column to classify
+ * @param {array} dataArray - array of data to classify
  * @param {string} breakType - name of the class break method
  * @param {number} numberClasses - number of class breaks to use
  * 
@@ -172,9 +172,9 @@ binMaster.DataMgr.prototype.setKey = function (keyField) {
  *
  * @return {array} array of class breaks
  */
-binMaster.DataMgr.prototype.getBins = function(columnName, breakType, numberClasses){
+binMaster.DataMgr.prototype.getBins = function(dataArray, breakType, numberClasses){
     console.log('Getting class breaks...');
-    var gsData = new geostats(this.getColumn(columnName));
+    var gsData = new geostats(dataArray);
     var bins;
     // grab classbreaks using geostats.js library
     switch (breakType.toLowerCase()) {
