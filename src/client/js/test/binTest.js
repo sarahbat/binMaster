@@ -2,6 +2,8 @@
 
 var binTest = {};
 var bTest = {};
+const NULL_VAL = '-9999';
+
 
 function makeTestData(numberBins){
 	if (numberBins === undefined){numberBins = 5;}
@@ -64,15 +66,51 @@ function testMap(breakType){
 	binTest.data = binMaster.dataMgr.getColumn('PCT_04');
 	// get class breaks
 	binTest.breaks = binMaster.dataMgr.getBins(binTest.data, breakType, 5);
-	binTest.bins = new binMaster.BinList(binTest.breaks);
+	binTest.binList = new binMaster.BinList(binTest.breaks);
 	binTest.binnedData = [];
 	binTest.id = binMaster.dataMgr.getColumn(binMaster.dataMgr.key); // retrieve column set as key field
 
-	binTest.bins.setColorEncoding(5);
+	binTest.binList.setColorEncoding(5);
 
 	for (var i = 0; i < binTest.data.length; i++) {
-		binTest.binnedData.push({'id': [binTest.id[i]], 'value': binTest.bins.getBin(binTest.data[i])});
+		binTest.binnedData.push({'id': [binTest.id[i]], 'value': binTest.binList.getBin(binTest.data[i])});
 	}
 
-	d3map.encodeMap('counties', binTest.binnedData, binTest.bins); // encode and link FIPS code to NUM_04 attribute
+	d3map.encodeMap('counties', binTest.binnedData, binTest.binList); // encode and link FIPS code to NUM_04 attribute
 }
+
+function testMap_null(breakType){
+	if (breakType === undefined){ breakType = 'EqualInterval';}
+	
+	binMaster.dataMgr.key = 'FIPS';
+
+	d3.select('.test').remove();
+	map_div = d3map.makeMapDiv(null, 'test', 500, 500); // 500px square div
+	map_svg = d3map.makeMapSVG(map_div);
+	d3map.drawTopoJSON(map_svg, d3map.data, 'counties', 'id');
+
+	attr = 'FIPS';
+	nullVal = 6083;
+	matchFn = function(r){return r[attr] !== nullVal;}
+
+
+	console.log(binMaster.dataMgr.getRows().length)
+	console.log(binMaster.dataMgr.getRows(matchFn).length)
+
+	binTest.data = binMaster.dataMgr.getColumn('PCT_04');
+	// get class breaks
+	binTest.breaks = binMaster.dataMgr.getBins(binTest.data, breakType, 5);
+	binTest.binList = new binMaster.BinList(binTest.breaks);
+	binTest.binnedData = [];
+	binTest.id = binMaster.dataMgr.getColumn(binMaster.dataMgr.key); // retrieve column set as key field
+
+	binTest.binList.setColorEncoding(5);
+
+	for (var i = 0; i < binTest.data.length; i++) {
+		binTest.binnedData.push({'id': [binTest.id[i]], 'value': binTest.binList.getBin(binTest.data[i])});
+	}
+
+	d3map.encodeMap('counties', binTest.binnedData, binTest.binList); // encode and link FIPS code to NUM_04 attribute
+}
+
+

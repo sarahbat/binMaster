@@ -93,6 +93,12 @@ binMaster.BinList.prototype.getOutRangeBin_low = function(){
  * 
  */ 
 binMaster.BinList.prototype.getBin = function(dataVal){
+	// First check if the value falls in a no data / null bin
+	if(dataVal === this.nullBin.binVals.min){
+		console.log(dataVal + ' is in the Null Bin ' + this.nullBin)
+		return;
+	}
+
 	for (var i = 0; i < this.bins.length; i++){
 		if(this.bins[i].binVals.min != undefined && this.bins[i].binVals.max != undefined){
 			if (dataVal === this.binMin){
@@ -219,7 +225,7 @@ binMaster.BinList.prototype.getBinBreaks = function(){
 binMaster.BinList.prototype.setColorEncoding = function(colorScheme){
 	var colors = get_colors(this.bins.length, colorScheme);
 	for (var i = 0; i < this.bins.length; i++){
-		this.bins[i].setEncodingDefn(colors[i]);
+		this.bins[i].setColor(colors[i]);
 	}
 
 	function get_colors(numberColors, colorScheme){
@@ -255,4 +261,9 @@ binMaster.BinList.prototype.getEncoding = function(){
 	}
 
 	return colors;
+}
+
+binMaster.BinList.prototype.setNullVal = function(nullVal){
+	this.nullBin.setBinMin(nullVal);
+	this.nullBin.setBinMax(nullVal);
 }

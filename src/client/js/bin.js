@@ -10,6 +10,7 @@
 // TODO: Fill in getters / setters
 
 const DEFAULT_COLOR = '#ccc';
+const DEFAULT_NULL_COLOR = '#ddd';
 
 /**
  * @param {number} opt_minVal - minimum bin value
@@ -20,7 +21,7 @@ const DEFAULT_COLOR = '#ccc';
  */
 binMaster.Bin = function (opt_minVal, opt_maxVal, opt_color) {
 	this.setNumericDefn(opt_minVal, opt_maxVal);
-	this.setEncodingDefn(opt_color); // could be extended to have different encoding objects for different purposes
+	this.setColor(opt_color); // could be extended to have different encoding objects for different purposes
 	this.labelVals = {}; // default object for label values
 	this.setLabelDefn("DEFAULT", opt_minVal, opt_maxVal); // always create a default label based on any specified min/max values
 };
@@ -84,12 +85,13 @@ binMaster.Bin.prototype.getBinRange = function(){
 	return this.binVals.range;
 }
 
+
 /**
  * Visual encoding characteristics for one bin
  * 
  * @param {string} colorVal - color for the bin (in hex)
  */ 
-binMaster.Bin.prototype.setEncodingDefn = function(colorVal){
+binMaster.Bin.prototype.setColor = function(colorVal){
 	if (colorVal === undefined){
 		colorVal = DEFAULT_COLOR;
 	}
@@ -136,3 +138,10 @@ binMaster.Bin.prototype.setLabelDefn = function(labelName, rangeVal, minVal, max
 		maxLabel: maxVal 
 	};
 };
+
+binMaster.Bin.prototype.printBinLabel = function(labelName){
+	if (labelName === undefined || Object.keys(this.labelVals).indexOf(labelName) === -1 ){ labelName = 'DEFAULT';}
+	console.log(this.labelVals[labelName].minLabel);
+	console.log(this.labelVals[labelName].rangeLabel);
+	console.log(this.labelVals[labelName].maxLabel);
+}
