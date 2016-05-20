@@ -94,12 +94,20 @@ binMaster.Bin.prototype.setEncodingDefn = function(colorVal){
 		colorVal = DEFAULT_COLOR;
 	}
 	this.encodeVals = {
-		color: colorVal
+		color: chroma(colorVal)
 	};
 };
 
-binMaster.Bin.prototype.getColor = function(){
-	return this.encodeVals.color;
+/**
+ * Get color for a single Bin
+ * 
+ * @param {string} opt_format - format to use in returning the color (hsl, hsv, lab, lch, hcl, cmyk, gl, etc.  See chroma.js)  if not used, defaults to hex
+ * @requires chroma.js
+ * @return {string} color value in specified format (opt_format).  
+ */ 
+binMaster.Bin.prototype.getColor = function(opt_format){
+	if (opt_format === undefined){opt_format = 'hex';}
+	return chroma(this.encodeVals.color)[opt_format]();
 }
 
 /**
