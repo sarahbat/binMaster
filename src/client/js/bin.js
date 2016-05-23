@@ -191,24 +191,22 @@ binMaster.Bin.prototype.setLabelMin = function(minVal, opt_labelName){
 	this.labelVals[labelName].minLabel = minVal.toString();
 }
 
-binMaster.Bin.prototype._getLabelName = function(labelName){
-	if (labelName === undefined){ 
-		labelName = 'DEFAULT';
-		// console.log('Label name not provided, updating DEFAULT labels instead');
-		return labelName;
-	}
-	
-	if (Object.keys(this.labelVals).indexOf(labelName) === -1){
-		// console.log(labelName + ' does not exist in the label definition; it has now been created for use.');
-		this.labelVals[labelName] = {};
-		return labelName;
-	}
+/**
+ * Get label for low end of the range for a bin (not required)
+ * 
+ * @param {string} labelName - label name.  If label name is undefined, set to DEFAULT, otherwise creates it
+ * 
+ * @return {string} 
+ */ 
+binMaster.Bin.prototype.getLabelMin = function(labelName){
+	var labelname;
+	labelName = this._getLabelName(labelName);
 
-	return labelName;
+	return this.labelVals[labelName].minLabel;
 }
 
 /**
- * Set label for high end of the range for a bin (not required); label is a string
+ * Set label for high end of the range for a bin; label is a string
  * 
  * @param {number, string} maxVal - either string or numeric value to use in labeling.  
  * @param {string} opt_labelName - optional label name.  If label name is undefined, set to DEFAULT, otherwise creates it
@@ -218,6 +216,20 @@ binMaster.Bin.prototype.setLabelMax = function(maxVal, opt_labelName){
 	labelName = this._getLabelName(opt_labelName);
 
 	this.labelVals[labelName].maxLabel = maxVal.toString();
+}
+
+/**
+ * Get label for high end of the range for a bin 
+ * 
+ * @param {string} labelName - label name.  If label name is undefined, set to DEFAULT, otherwise creates it
+ * 
+ * @return {string} 
+ */ 
+binMaster.Bin.prototype.getLabelMax = function(labelName){
+	var labelname;
+	labelName = this._getLabelName(labelName);
+
+	return this.labelVals[labelName].maxLabel;
 }
 
 /**
@@ -233,6 +245,35 @@ binMaster.Bin.prototype.setLabelRange = function(rangeVal, opt_labelName){
 	this.labelVals[labelName].rangeLabel = rangeVal.toString();
 }
 
+/**
+ * Get label for range of a bin
+ * 
+ * @param {string} labelName - label name.  If label name is undefined, set to DEFAULT, otherwise creates it
+ * 
+ * @return {string} 
+ */ 
+binMaster.Bin.prototype.getLabelRange = function(labelName){
+	var labelname;
+	labelName = this._getLabelName(labelName);
+
+	return this.labelVals[labelName].rangeLabel;
+}
+
+binMaster.Bin.prototype._getLabelName = function(labelName){
+	if (labelName === undefined){ 
+		labelName = 'DEFAULT';
+		// console.log('Label name not provided, updating DEFAULT labels instead');
+		return labelName;
+	}
+	
+	if (Object.keys(this.labelVals).indexOf(labelName) === -1){
+		// console.log(labelName + ' does not exist in the label definition; it has now been created for use.');
+		this.labelVals[labelName] = {};
+		return labelName;
+	}
+
+	return labelName;
+}
 
 binMaster.Bin.prototype.printBinLabel = function(labelName){
 	if (labelName === undefined || Object.keys(this.labelVals).indexOf(labelName) === -1 ){ labelName = 'DEFAULT';}

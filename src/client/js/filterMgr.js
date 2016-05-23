@@ -3,11 +3,23 @@
 
 var fm = {};
 
-fm.removeNull = function(attribute, nullVal){
+fm.removeNull_rows = function(attribute, nullVal){
 	matchFn = function(r){return r[attribute] !== nullVal;}
 	// console.log(binMaster.dataMgr.getRows().length);
 	// console.log(binMaster.dataMgr.getRows(matchFn).length);
 	return binMaster.dataMgr.getRows(matchFn);
+};
+
+fm.removeNull_column = function(attribute, nullVal){
+	matchFn = function(r){return r[attribute] !== nullVal;}
+	// console.log(binMaster.dataMgr.getRows().length);
+	// console.log(binMaster.dataMgr.getRows(matchFn).length);
+	var rows = binMaster.dataMgr.getRows(matchFn);
+	var col = [];
+	for (var i = 0; i < rows.length; i++){
+		col.push(rows[i][attribute]);
+	}
+	return col;
 };
 
 fm.isNull = function(attribute, nullVal){

@@ -94,7 +94,7 @@ binMaster.BinList.prototype.getOutRangeBin_low = function(){
 binMaster.BinList.prototype.getBin = function(dataVal){
 	// First check if the value falls in a no data / null bin
 	if(dataVal === this.nullBin.binVals.min){
-		console.log(dataVal + ' is in the Null Bin ' + this.nullBin)
+		// console.log(dataVal + ' is in the Null Bin ' + this.nullBin)
 		return -1;
 	}
 
