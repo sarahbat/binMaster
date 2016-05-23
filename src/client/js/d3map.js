@@ -181,10 +181,12 @@ d3map.encodeMap = function(featureName, featureData, binList){
     	d3.select('#_' + featureData[i].id)
     		.style('fill', null)
     		.style('fill', function(){
+    			if (featureData[i].value === -1){return binList.nullBin.getColor();} // -1 = no data
     			return binList.bins[featureData[i].value].getColor();
     		})
     		.attr('class', function(){
-    			return 'class' + featureData[i].value; 
+    			if (featureData[i].value === -1){return featureName + ' class_null';}
+    			return featureName + ' class_' + featureData[i].value; 
     		})
     }
 }

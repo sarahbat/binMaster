@@ -29,8 +29,7 @@ binMaster.BinList = function (binParam){
 		}
 		// set bin values based on array-specified breaks
 		for (var i = 0; i < binParam.length - 1; i++){
-			this.bins[i].setBinMin(binParam[i]);
-			this.bins[i].setBinMax(binParam[i+1]); // binBreaks should always be numBins + 1
+			this.bins[i].setNumericDefn(binParam[i], binParam[i+1]);
 		}
 	} else { // BinList initialized without definition
 		this.bins = new Array();
@@ -96,8 +95,19 @@ binMaster.BinList.prototype.getBin = function(dataVal){
 	// First check if the value falls in a no data / null bin
 	if(dataVal === this.nullBin.binVals.min){
 		console.log(dataVal + ' is in the Null Bin ' + this.nullBin)
-		return;
+		return -1;
 	}
+
+	// // Then check if the value is out of range
+	// if(dataVal > this.outRangeBin_high.binVals.min){
+	// 	console.log(dataVal + ' is out of range (high)');
+	// 	return -2;
+	// }
+	// if (dataVal < this.outRangeBin_low.binVals.min){
+	// 	console.log(dataVal + ' is out of range (low)');
+	// 	return -3
+	// }
+	
 
 	for (var i = 0; i < this.bins.length; i++){
 		if(this.bins[i].binVals.min != undefined && this.bins[i].binVals.max != undefined){

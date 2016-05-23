@@ -26,15 +26,22 @@ fm.lessThan = function(attribute, maxVal){
 	matchFn = function(r){
 		return r[attribute] < maxVal;
 	}
-	return binMaster.dataMgr(getRows(matchFn));
+	return binMaster.dataMgr.getRows(matchFn);
 };
 
 fm.moreThan = function(attribute, minVal){
 	matchFn = function(r){
 		return r[attribute] > minVal;
 	}
-	return binMaster.dataMgr(getRows(matchFn));
-};
+	return binMaster.dataMgr.getRows(matchFn);
+}; 
+
+fm.equalTo = function(attribute, val){
+	matchFn = function(r){
+		return r[attribute] === val;
+	}
+	return binMaster.dataMgr.getRows(matchFn);
+}
 
 fm.oneColumn = function(attribute){
 	return binMaster.dataMgr.getColumn(attribute);

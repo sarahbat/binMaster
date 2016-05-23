@@ -90,17 +90,17 @@ function testMap_null(breakType){
 	d3map.drawTopoJSON(map_svg, d3map.data, 'counties', 'id');
 
 	attr = 'FIPS';
-	nullVal = 6083;
+	nullVal = 19.2; // SB County 19.2 for PCT_O4
 	matchFn = function(r){return r[attr] !== nullVal;}
 
-
-	console.log(binMaster.dataMgr.getRows().length)
-	console.log(binMaster.dataMgr.getRows(matchFn).length)
+	console.log('Length all rows: ' + binMaster.dataMgr.getRows().length)
+	console.log('Length all rows - null values: ' + binMaster.dataMgr.getRows(matchFn).length)
 
 	binTest.data = binMaster.dataMgr.getColumn('PCT_04');
 	// get class breaks
 	binTest.breaks = binMaster.dataMgr.getBins(binTest.data, breakType, 5);
 	binTest.binList = new binMaster.BinList(binTest.breaks);
+	binTest.binList.setNullVal(nullVal); // set to PCT_04 for Santa Barbara county
 	binTest.binnedData = [];
 	binTest.id = binMaster.dataMgr.getColumn(binMaster.dataMgr.key); // retrieve column set as key field
 
@@ -108,6 +108,9 @@ function testMap_null(breakType){
 
 	for (var i = 0; i < binTest.data.length; i++) {
 		binTest.binnedData.push({'id': [binTest.id[i]], 'value': binTest.binList.getBin(binTest.data[i])});
+		if (binTest.binList.getBin(binTest.data[i]) === -1){
+			console.log(binTest.id[i], binTest.data[i], binTest.binList.getBin(binTest.data[i]));
+		}
 	}
 
 	d3map.encodeMap('counties', binTest.binnedData, binTest.binList); // encode and link FIPS code to NUM_04 attribute
