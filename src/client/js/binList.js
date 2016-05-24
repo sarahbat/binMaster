@@ -37,6 +37,7 @@ binMaster.BinList = function (binParam){
 	this.outRangeBin_high = new binMaster.Bin;
 	this.outRangeBin_low = new binMaster.Bin;
 	this.nullBin = new binMaster.Bin;
+	this.noDataBin = new binMaster.Bin;
 	this.binMax = undefined;
 	this.binMin = undefined; // to store the overall range of bin values
 

@@ -188,7 +188,7 @@ d3map.encodeMap = function(featureName, featureData, binList){
     		.attr('class', function(){
     			if (featureData[i].value === NULL_CLASS){return featureName + ' class_null';}
     			if (featureData[i].value === NODATA_CLASS){return featureName + ' class_noData'}
-    			return featureName + ' class_' + featureData[i].value; 
+    			return featureName + ' class_' + featureData[i].bin; 
     		})
     }
 }
