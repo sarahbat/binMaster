@@ -3,24 +3,32 @@
 
 var fm = {};
 
-fm.removeNull_rows = function(attribute, nullVal){
+fm.removeRowsByAttribute = function(attribute, nullVal, obj){
 	matchFn = function(r){return r[attribute] !== nullVal;}
-	// console.log(binMaster.dataMgr.getRows().length);
-	// console.log(binMaster.dataMgr.getRows(matchFn).length);
-	return binMaster.dataMgr.getRows(matchFn);
+
+	var rows = obj === undefined ? binMaster.dataMgr.getRows(matchFn) : binMaster.dataMgr.getRows(matchFn, obj);
+	return rows;
 };
 
-fm.removeNull_column = function(attribute, nullVal){
+fm.removeNull_column = function(attribute, nullVal, obj){
 	matchFn = function(r){return r[attribute] !== nullVal;}
-	// console.log(binMaster.dataMgr.getRows().length);
-	// console.log(binMaster.dataMgr.getRows(matchFn).length);
-	var rows = binMaster.dataMgr.getRows(matchFn);
+
+	var rows = obj === undefined ? binMaster.dataMgr.getRows(matchFn) : binMaster.dataMgr.getRows(matchFn, obj);
 	var col = [];
 	for (var i = 0; i < rows.length; i++){
 		col.push(rows[i][attribute]);
 	}
 	return col;
 };
+
+fm.getColumn = function(attribute, obj){
+	var col = [];
+	for (var i = 0; i < obj.length; i++){
+		col.push(obj[i][attribute]);
+	}
+	return col;
+}
+
 
 fm.isNull = function(attribute, nullVal){
 	matchFn = function(r){return r[attribute] === nullVal;}

@@ -42,9 +42,13 @@ binMaster.DataMgr.prototype.load = function (dataPath, cb) {
  * { home: 'one'; price: '1000'}  converts to { home: 'one'; price: 1000}
  */
 binMaster.DataMgr.prototype._fixObj = function (obj, index) {
+  var objVal;
+
   for (var prop in obj) {
-    if (index == 0){this.columnNameList.push(prop);} // for first object, set the column names
-    obj[prop] = isNaN(obj[prop]) ? obj[prop] : +obj[prop]; // string or number
+    if (index === 0){this.columnNameList.push(prop);} // for first object, set the column names
+    objVal = obj[prop] === '' ? '.' : obj[prop]; // replace no data with nullVal
+    obj[prop] = isNaN(objVal) ? objVal : +objVal;
+    // obj[prop] = isNaN(obj[prop]) || obj[prop] === '' ? obj[prop] : +obj[prop]; // string or number
   }
   return obj;
 };
@@ -120,6 +124,7 @@ binMaster.DataMgr.prototype.getColumn = function (columnName) {
   }
 
   for (var row = 0; row < this.rowCount; ++row) {
+
     resultList[row] = this.data[row][columnName];
   }
 

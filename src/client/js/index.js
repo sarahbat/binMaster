@@ -4,6 +4,8 @@
 /*jslint nomen:true, plusplus:true, todo:true,  browser:true  */
 'use strict';
 
+const NULL_CLASS = -1;
+const NODATA_CLASS = -2;
 
 
 /**

@@ -2,7 +2,10 @@
 
 var binTest = {};
 var bTest = {};
-const NULL_VAL = '-9999';
+var filter = {}; // generic filter values for testing
+const NULL_VAL = -9999;
+const NO_DATA = '.'; // blank cells should be set to '.' in the initial data load
+const FILTER_VAL = -99999; // place holder to mark values that have been 'filtered out'
 
 
 function makeTestData(numberBins){
@@ -90,31 +93,52 @@ function testMap_null(breakType){
 	d3map.drawTopoJSON(map_svg, d3map.data, 'counties', 'id');
 
 	attr = 'WEST_04_NODATA';
-	nullVal = -9999; // SB County 19.2 for PCT_O4
-	matchFn = function(r){return r[attr] !== nullVal;}
+
+	filter.state = 'California';
+	filter.constrain_min = 12;
+	filter.constrain_max = 20;
+
+	matchFn = function(r){return r[attr] !== NULL_VAL;}
 
 	console.log('Length all rows: ' + binMaster.dataMgr.getRows().length)
 	console.log('Length all rows - null values: ' + binMaster.dataMgr.getRows(matchFn).length)
 
+	// make dataset with all values and cleaned dataset (no null, no no-data values)
 	binTest.all_data = binMaster.dataMgr.getColumn(attr);
-	binTest.without_no_data = fm.removeNull_column(attr, nullVal);
+	binTest.cleaned_data = cleanData(attr, NULL_VAL, NO_DATA);
+
 	// get class breaks
-	binTest.breaks = binMaster.dataMgr.getBins(binTest.without_no_data, breakType, 5);
+	binTest.breaks = binMaster.dataMgr.getBins(binTest.cleaned_data, breakType, 5);
 	binTest.binList = new binMaster.BinList(binTest.breaks);
-	binTest.binList.setNullVal(nullVal); // set to PCT_04 for Santa Barbara county
+	binTest.binList.setNullVal(NULL_VAL); // set to PCT_04 for Santa Barbara county
 	binTest.binnedData = [];
 	binTest.id = binMaster.dataMgr.getColumn(binMaster.dataMgr.key); // retrieve column set as key field
 
 	binTest.binList.setColorEncoding(5);
 
 	for (var i = 0; i < binTest.all_data.length; i++) {
-		binTest.binnedData.push({'id': [binTest.id[i]], 'value': binTest.binList.getBin(binTest.all_data[i])});
-		if (binTest.binList.getBin(binTest.all_data[i]) === -1){
-			console.log(binTest.id[i], binTest.all_data[i], binTest.binList.getBin(binTest.all_data[i]));
-		}
+		binTest.binnedData.push({'id': binTest.id[i], 'bin': binTest.binList.getBin(binTest.all_data[i])});
 	}
 
 	d3map.encodeMap('counties', binTest.binnedData, binTest.binList); // encode and link FIPS code to NUM_04 attribute
+
+	function cleanData(attr, nullVal, noDataVal){
+		var noNull = fm.removeRowsByAttribute(attr, nullVal);
+		return fm.getColumn(attr, fm.removeRowsByAttribute(attr, noDataVal, noNull));
+	}
 }
 
+function filter_redraw(filterField, filterValue){
+	// filter the data
+	var all_data = binMaster.dataMgr.getColumn(attr);
+	var cleaned_data = fm.removeRowsByAttribute(filterField, filterValue);
 
+	// use existing bins - do not re-bin; just update which IDs are binned
+	for (var i = 0; i < binTest.all_data.length; i++) {
+		binTest.binnedData.push({'id': [binTest.id[i]], 'value': binTest.binList.getBin(binTest.all_data[i])});
+	}
+
+	// update the map
+
+
+}

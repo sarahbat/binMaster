@@ -95,7 +95,10 @@ binMaster.BinList.prototype.getBin = function(dataVal){
 	// First check if the value falls in a no data / null bin
 	if(dataVal === this.nullBin.binVals.min){
 		// console.log(dataVal + ' is in the Null Bin ' + this.nullBin)
-		return -1;
+		return NULL_CLASS;
+	}
+	if(dataVal === '.'){
+		return NODATA_CLASS;
 	}
 
 	// // Then check if the value is out of range
@@ -107,7 +110,7 @@ binMaster.BinList.prototype.getBin = function(dataVal){
 	// 	console.log(dataVal + ' is out of range (low)');
 	// 	return -3
 	// }
-	
+
 
 	for (var i = 0; i < this.bins.length; i++){
 		if(this.bins[i].binVals.min != undefined && this.bins[i].binVals.max != undefined){

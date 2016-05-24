@@ -181,11 +181,13 @@ d3map.encodeMap = function(featureName, featureData, binList){
     	d3.select('#_' + featureData[i].id)
     		.style('fill', null)
     		.style('fill', function(){
-    			if (featureData[i].value === -1){return binList.nullBin.getColor();} // -1 = no data
-    			return binList.bins[featureData[i].value].getColor();
+    			if (featureData[i].bin === NULL_CLASS){return binList.nullBin.getColor();} // -1 = null value
+    			if (featureData[i].bin === NODATA_CLASS){return binList.nullBin.getColor();} // -2 = empty cell, temporarily set to no data color
+    			return binList.bins[featureData[i].bin].getColor();
     		})
     		.attr('class', function(){
-    			if (featureData[i].value === -1){return featureName + ' class_null';}
+    			if (featureData[i].value === NULL_CLASS){return featureName + ' class_null';}
+    			if (featureData[i].value === NODATA_CLASS){return featureName + ' class_noData'}
     			return featureName + ' class_' + featureData[i].value; 
     		})
     }
