@@ -1,0 +1,22 @@
+/* index.css */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+body {
+  background-color: white;
+  color: black;
+  font-family: open sans;
+  margin: 20px;
+}
+
+.header {
+  border: solid 1px black;
+  font-size: 12px;
+  height: 120px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.button {
+  margin-bottom: 20px;
+  padding: 5px;
+}

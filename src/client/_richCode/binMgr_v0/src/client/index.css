@@ -1,0 +1,33 @@
+/* index.css */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+body {
+  background-color: white;
+  color: black;
+  font-family: open sans;
+  font-size: 12px;
+  margin: 20px;
+}
+
+.dataDescriptionCard {
+  border: solid 1px black;
+  height: 150px;
+  margin-bottom: 20px;
+  overflow: auto;
+  padding: 5px;
+  width: calc(100% - 10px);
+}
+
+.binCard {
+  border: solid 1px black;
+  height: 300px;
+  margin-bottom: 20px;
+  overflow: auto;
+  padding: 5px;
+  width: 300px;
+}
+
+.button {
+  margin-bottom: 20px;
+  padding: 5px;
+}

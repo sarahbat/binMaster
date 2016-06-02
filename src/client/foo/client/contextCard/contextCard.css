@@ -1,0 +1,11 @@
+/* contextCard.css */
+
+.contextCardContainer {
+  background-color: rgb(250, 247, 230);
+  border: solid 1px black;
+  font-size: 12px;
+  height: 130px;
+  margin-bottom: 20px;
+  overflow: auto;
+  width: 250px;
+}

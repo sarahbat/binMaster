@@ -1,0 +1,24 @@
+{
+  "author": "rcg",
+  "dependencies": {},
+  "description": "Build using node.",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "buildTemplate",  
+  "repository": "gitlab",
+  "scripts": { "test": "echo \"no tests specified\" && exit 1" },
+  "version": "1.0.0",
+  "projectVars": {
+    "projectDir": "C:/Users/%USERNAME%/Dropbox/projects/binMgr",
+    "projectVersion": "1.0.0",
+    "backupDir": "C:/rcg/src/projects/binMgrDir",
+    "cmdList": [
+       ["backup", "clean, zip, and copy to the backup directory"],
+       ["clean", "remove tilde files"],
+       ["copyuseful", "copy useful into thirdParty"],
+       ["lint", "identify style errors for *.js and *.css files"],
+       ["release", "clean, lint, cat, uglify into /release"],
+       ["show", "show this menu"]
+     ]
+  }
+}

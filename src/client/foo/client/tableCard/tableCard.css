@@ -1,0 +1,10 @@
+/* tableCard.css */
+
+.tableCardContainer {
+  border: solid 1px black;
+  font-size: 12px;
+  height: 300px;  
+  margin-bottom: 20px;
+  overflow: auto;
+  width: 250px;
+}

@@ -1,0 +1,124 @@
+binMgr notes
+=============
+
+V1.0.0
+  test with explicit bin size setting
+  show the bins as little stacks
+
+  data/ can put different csv data source in data/
+  get lee's bin computing
+  show the bins in the index.js
+  get binMin, binMax, count
+  get data min, max, count
+
+  outOfRange bins
+
+  simple bin
+  added ezServer (can specify root and port, default is 12345)
+
+
+bin keeps a count
+smartBin tracks the objects
+
+bin
+  range | type
+  count | list
+
+binMgr
+  array of bins
+  auto-compute binCount
+  set bin ranges
+  set bin count
+  load data
+  recompute bins
+  null rule
+  outOfRange rule
+  noNumber rule
+  get bins
+  remove? // hide
+
+binWidget
+  see the bin (range, count, desc)
+  hide
+
+binMgrWidget
+  see all of the bins
+  see the rules
+  recompute
+  load
+  see the counts (circles? /svg)
+
+sub-binning
+  bin within a set of bins...
+  a second binMgr and do subset?
+  binMgr accepts set of bins?
+  binMgrMgr?
+
+----------------------------------------------------------------------
+V2.0.0
+  smart bin
+  sub-bin
+
+----------------------------------------------------------------------
+Bins should be all the same size. For example, groups of ten or a hundred.
+
+Bins should include all of the data, even outliers. If your outliers fall
+way outside of your other data, consider lumping them in with your first or
+last bin. This creates a rough histogram — make sure you note where
+outliers are being included. 
+
+Boundaries for bins should land at whole numbers whenever possible (this
+makes the chart easier to read). 
+
+Choose between 5 and 20 bins. The larger the data set, the more likely
+you’ll want a large number of bins. For example, a set of 12 data pieces
+might warrant 5 bins but a set of 1000 numbers will probably be more useful
+with 20 bins. The exact number of bins is usually a judgment call. 
+
+If at all possible, try to make your data set evenly divisible by the
+number of bins. For example, if you have 10 pieces of data, work with 5
+bins instead of 6 or 7.
+
+----------------------------------------------------------------------
+
+V1.0.0
+Users can select a (standard) statistical / data distribution-driven
+classification scheme 
+
+Users can manually set class breaks
+
+Min and Max for class breaks does not have to align with user data (e.g.,
+values can be outside the class breaks, or breaks can be greater than /
+less than the data max / min) 
+
+Users can specify no data values to remove them from the classification
+scheme.  These values can still be encoded (i.e., they do not need to be
+filtered out / disappear) 
+
+Users can specify filters to restrict the values used in defining the
+classification scheme.  Values filtered out can still be encoded. 
+
+Users can explore graphical (e.g., histogram) and text definitions of the
+bins.  
+
+For equal interval class breaks, users can define start and end points
+independently from the data distribution (i.e., data is all between 37 and
+83, but user wants class breaks between 0 and 100). 
+
+Clear legends / definitions for the bins are provided (numeric range for
+each bin)
+
+Each bin can be encoded independently (numeric bins, out-of-range bins,
+null data bin, filtered out data bin) 
+
+
+----------------------------------------------------------------------
+V2.0.0
+
+Multiple semantic legends / definitions  for bins and break points between
+bins can be created 
+
+Users can interact with the graphical and text definitions of the bins to
+adjust on the fly 
+
+----------------------------------------------------------------------

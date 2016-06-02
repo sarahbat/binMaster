@@ -1,0 +1,4 @@
+../../aaa_notForProject/**/*.js
+../release/**/*.js
+../client/thirdParty/**/*.js
+../ezServer/node_modules/**/*.js
